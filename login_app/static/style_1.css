@@ -1,0 +1,32 @@
+/* .main_container {
+    height: 00px;  
+    } */
+    .monospace{
+        font-family: monospace;
+        color: rgb(41, 2, 39);
+    }
+    #catigory{
+        width: 200px;
+    }
+    .link{
+        background-color: #faf0da;
+        margin: 10px;
+    }
+    .one{
+        border: solid rgb(222, 135, 208) 1px;
+        color: #F152BC;
+        background-color: #faf0da;
+        font-family: 'Courier New', Courier, monospace;
+        font-weight: bolder;
+    }
+    .check_out{
+        color: #F152BC;
+        font-weight: bolder;
+        font-family: 'Courier New', Courier, monospace;
+    }
+    .rate_block{
+        display: inline-block;
+    }
+    .form{
+        display: inline-block;
+    }

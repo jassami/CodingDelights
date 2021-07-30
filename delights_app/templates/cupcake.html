@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Delights</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"
+        integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+        integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="{% static 'css/star.css' %}">
+    <script defer src="{% static 'js/script.js' %}"></script>
+</head>
+
+<body>
+    <div class="main_container container-fluid" style="background-color: #fdf8ec">
+        <div style="background-color: #faf0da; border-bottom:rgb(222, 135, 208) 2px solid" class="row mb-5">
+            <div class="col-6 ml-5">
+                <div class="row">
+                    <img class="mx-5" src="{% static 'img/delight_logo.png' %}" alt="" style="width: 100px;">
+                    <h5 class="ml-5 mt-5 monospace">Welcome {{request.session.first_name}}!</h5>
+                </div>
+            </div>
+            <div class="col d-flex">
+                <a class=" float-right mt-5 ml-5 monospace" href="/delights/{{request.session.user_id}}">My Account</a>
+            </div>
+            <div class="col d-flex">
+                <a class="float-right mt-5 ml-5 monospace" href="/delights/logout">Logout</a>
+            </div>
+            <div class="col-1 d-flex">
+                <p class="mt-5 monospace">Basket({{request.session.basket}})</p>
+            </div>
+        </div>
+        <div class="row m-5">
+            <div class="col-2 mx-5">
+                <div class="mt-5" id="catigory" >
+                    <a href="/delights/cupcakes" style="border: 2px solid rgb(222, 135, 208); border-radius: 5px;"
+                        class="list-group-item list-group-item-action monospace link">CUPCAKES</a>
+                    <a href="/delights/tarts" style="border: 2px solid rgb(222, 135, 208); border-radius: 5px;"
+                        class="list-group-item list-group-item-action monospace link">TARTS</a>
+                    <a href="/delights/cookies" style="border: 2px solid rgb(222, 135, 208); border-radius: 5px;"
+                        class="list-group-item list-group-item-action monospace link">COOKIES</a>
+                    <a href="/delights/all" style="border: 2px solid rgb(222, 135, 208); border-radius: 5px;"
+                        class="list-group-item list-group-item-action monospace link">ALL</a>
+                </div>
+            </div>
+            <div class="col-4 mt-4 img-fluid rounded mx-auto d-block">
+                <img class="ml-5" src="{{cupcake.image}}" style="width: 300px;" alt="">
+            </div>
+            <div class="col-5 content-start">
+                <h4 class="monospace mt-4">{{cupcake.name}}</h4>
+                <div class="my-4 rate_block">
+                    {% if rate == 0 %}
+                    <span class="fa fa-star-o checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    {% elif rate == 1 %}
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    {% elif rate == 1.5 %}
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star-half-full checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    {% elif rate == 2 %}
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    {% elif rate == 2.5 %}
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star-half-full checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    {% elif rate == 3 %}
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    {% elif rate == 3.5 %}
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star-half-full checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    {% elif rate == 4 %}
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star-o checked"></span>
+                    {% elif rate == 4.5 %}
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star-half-full checked"></span>
+                    {% elif rate == 5 %}
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    <span class="fa fa-star checked"></span>
+                    {% endif %}
+                </div>
+                <div class="m-4 rate_block">
+                <button type="button" class="btn one btn-sm mx-4" data-bs-toggle="modal" data-bs-target="#rate">
+                    Rate
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="rate" tabindex="-1" aria-labelledby="rateLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div style="background-color: #fdf8ec;" class="modal-content">
+                            <div class="modal-body">
+                                <form action="/delights/rate/{{cupcake.id}}" method="POST">
+                                    {% csrf_token %}
+                                    <label for="">Rate from 1 to 5:</label>
+                                    <input type="number" min="1" max="5" name="rate">
+                                    <div class="d-md-flex justify-content-md-end">
+                                        <input type="submit" class="btn one ml-5" value="Rate">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of modal -->
+                <button type="button" class="btn one btn-sm" data-bs-toggle="modal" data-bs-target="#review">
+                    Add review
+                </button>
+                <!-- Modal -->
+                <div class="modal fade" id="review" tabindex="-1" aria-labelledby="reviewLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div style="background-color: #fdf8ec;" class="modal-content">
+                            <div class="modal-body">
+                                <form action="/delights/review/{{cupcake.id}}" method="POST">
+                                    {% csrf_token %}
+                                    <textarea name="review" id="" cols="50" rows="3"></textarea>
+                                    <div class="d-md-flex justify-content-md-end">
+                                        <input type="submit" class="btn one ml-5" value="Submit">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- End of modal -->
+                </div>
+                <p class="monospace">{{cupcake.des}}</p>
+                <div class="row">
+                    <p class="monospace ml-5">One cupcake for ${{cupcake.price}}</p>
+                    <form action="/delights/add_delight/{{cupcake.id}}" method="POST">
+                        {% csrf_token %}
+                        <select name="qty" id="">
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                            <option value="5">5</option>
+                            <option value="6">6</option>
+                            <option value="7">7</option>
+                            <option value="8">8</option>
+                            <option value="9">9</option>
+                            <option value="10">10</option>
+                            <option value="11">11</option>
+                            <option value="12">12</option>
+                        </select><br>
+                        <input type="submit" class="one btn m-4" value="Add Delight">
+                    </form><br>
+                </div>
+                <p><a class="check_out" href="/delights/check_out">Check out</a></p>
+            </div>
+        </div>
+        <div class="col-6 ml-5">
+            <h4 class="monospace">Reviews</h4>
+            {% for review in cupcake.delight_reviews.all %}
+            <hr>
+            <p class="monospace" style="font-size: 14px;">{{review.uploaded_by.first_name}}</p>
+            <p class="monospace">{{review.review}}</p>
+            <p class="monospace" style="font-size: 14px;">{{review.created_at|date:"F d, Y"}}</p>
+            {% endfor %}
+        </div>
+        <div style="background-color: #faf0da; border-top: rgb(222, 135, 208) 2px solid; height: 100PX;">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link active monospace m-4" aria-current="page" href="#">ABOUT US</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link monospace m-4" href="#">FIND A BAKERY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link monospace m-4" href="#">FAQS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link monospace m-4" href="#" tabindex="-1" aria-disabled="true">CONTACT US</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+
+</html>

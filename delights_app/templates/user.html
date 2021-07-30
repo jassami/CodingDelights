@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coding Delights</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+</head>
+<body>
+    <div class="main_container container-fluid" style="background-color: #fdf8ec">
+        <div style="background-color: #faf0da; border-bottom:rgb(222, 135, 208) 2px solid" class="row mb-5">
+            <div class="col-6 ml-5">
+                <div class="row">
+                    <img class="mx-5" src="{% static 'img/delight_logo.png' %}" alt="" style="width: 100px;">
+                    <h5 class="ml-5 mt-5 monospace">Welcome {{request.session.first_name}}!</h5>
+                </div>
+            </div>
+            <div class="col d-flex">
+                <a class=" float-right mt-5 ml-5 monospace" href="/delights">Home</a>
+            </div>
+            <div class="col d-flex">
+                <a class="float-right mt-5 ml-5 monospace" href="/delights/logout">Logout</a>
+            </div>
+            <div class="col-1 d-flex">
+                <p class="mt-5 monospace">Basket({{request.session.basket}})</p>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col text-center">
+                <h3 class="monospace mb-5">Update your account</h3>
+                {% if request.session.send == "update" %}
+                    {% for message in messages %}
+                        <p style="color: red;">{{message}}</p>
+                    {% endfor %}
+                {% endif %}
+                <form action="/delights/update" method="POST">
+                    {% csrf_token %}
+                    <label class="mr-5 monospace" for="">First Name</label>
+                    <input class="mb-3" type="text" name="first_name" value="{{request.session.first_name}}"><br>
+                    <label class="mr-5 monospace" for="">Last Name</label>
+                    <input class="ml-2 mb-3" type="text" name="last_name" value="{{request.session.last_name}}"><br>
+                    <label class="mr-5 monospace" for="">Email</label>
+                    <input class="ml-5 mb-3" type="text" name="email" value="{{request.session.email}}"><br>
+                    <label class="mr-5 monospace" for="">Address</label>
+                    <input class="ml-4 mb-3" type="text" name="address" value="{{request.session.address}}"><br>
+                    <label class="mr-5 monospace" for="">City</label>
+                    <input class="ml-5 mb-3" type="text" name="city" value="{{request.session.city}}"><br>
+                    <label class="mr-5 monospace" for="">State</label>
+                    <select class="form-select mb-3 p-1 px-4 ml-5" id="state" name="state">
+                        <option selected>Select a State</option>
+                        <option value="AK">AK</option>
+                        <option value="AL">AL</option>
+                        <option value="AR">AR</option>
+                        <option value="AZ">AZ</option>
+                        <option value="CA">CA</option>
+                        <option value="CO">CO</option>
+                        <option value="CT">CT</option>
+                        <option value="DC">DC</option>
+                        <option value="DE">DE</option>
+                        <option value="FL">FL</option>
+                        <option value="GA">GA</option>
+                        <option value="HI">HI</option>
+                        <option value="IA">IA</option>
+                        <option value="ID">ID</option>
+                        <option value="IL">IL</option>
+                        <option value="IN">IN</option>
+                        <option value="KS">KS</option>
+                        <option value="KY">KY</option>
+                        <option value="LA">LA</option>
+                        <option value="MA">MA</option>
+                        <option value="MD">MD</option>
+                        <option value="ME">ME</option>
+                        <option value="MI">MI</option>
+                        <option value="MN">MN</option>
+                        <option value="MO">MO</option>
+                        <option value="MS">MS</option>
+                        <option value="MT">MT</option>
+                        <option value="NC">NC</option>
+                        <option value="ND">ND</option>
+                        <option value="NE">NE</option>
+                        <option value="NH">NH</option>
+                        <option value="NJ">NJ</option>
+                        <option value="NM">NM</option>
+                        <option value="NV">NV</option>
+                        <option value="NY">NY</option>
+                        <option value="OH">OH</option>
+                        <option value="OK">OK</option>
+                        <option value="OR">OR</option>
+                        <option value="PA">PA</option>
+                        <option value="PR">PR</option>
+                        <option value="RI">RI</option>
+                        <option value="SC">SC</option>
+                        <option value="SD">SD</option>
+                        <option value="TN">TN</option>
+                        <option value="TX">TX</option>
+                        <option value="UT">UT</option>
+                        <option value="VA">VA</option>
+                        <option value="VT">VT</option>
+                        <option value="WA">WA</option>
+                        <option value="WI">WI</option>
+                        <option value="WV">WV</option>
+                        <option value="WY">WY</option>
+                    </select><br>
+                    <label class="mr-5 monospace" for="">Password</label>
+                    <input class="ml-3" type="password" name="password"><br>
+                    <input type="submit" class="btn one mb-4 ml-5 mt-4" value="Update">
+                </form>
+            </div>
+            <div class="col">
+                <h3 class="monospace">Your orders</h3>
+                {% for order in orders %}
+                <hr>
+                <div>
+                <p class="monospace">{{order.created_at|date:"F d, Y"}} <span class="ml-5">Total: ${{order.paid_amount}}</span> </p>
+                    {% for delight in order.order_delight_orders.all %}
+                        <div class="row m-2 ml-5">
+                            <hr>
+                            <div class="col">
+                                <img src="{{delight.delight.image}}" alt="" style="width: 50px; height: 50px;">
+                            </div>
+                            <div class="col">
+                                <p class="monospace">{{delight.delight.name}}</p>
+                            </div>
+                            <div class="col">
+                                <p class="monospace">QTY: {{delight.quantity}}</p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+        <div style="background-color: #faf0da; border-top: rgb(222, 135, 208) 2px solid; height: 100PX;">
+            <ul class="nav justify-content-center">
+                <li class="nav-item">
+                    <a class="nav-link active monospace m-4" aria-current="page" href="#">ABOUT US</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link monospace m-4" href="#">FIND A BAKERY</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link monospace m-4" href="#">FAQS</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link monospace m-4" href="#" tabindex="-1" aria-disabled="true">CONTACT US</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</body>
+</html>
