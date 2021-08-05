@@ -47,9 +47,10 @@
                 </div>
                 <div class="col">
                     <p>{{count}} results</p>
+                    <p>Page number: {{page.number}}</p>
                     <div class="row row-cols-1 row-cols-md-3 g-4">
-                        {% for delight in all_delights %}
-                        <div class="col mb-4">
+                        {% for delight in page.object_list %}
+                        <div class="col mb-5">
                             <div style="width: 280px; background-color: #faf0da;" class="card">
                             <img style="height: 300px;" src="{{delight.image}}" class="card-img-top" alt="...">
                             <div class="card-body">
@@ -59,7 +60,14 @@
                         </div>
                         {% endfor %} 
                     </div>
-                    
+                    <div style="text-align: center">
+                        {% if page.has_previous %}
+                        <a style="color: #F152BC;" href="?page={{page.previous_page_number}}">Previous Page</a>
+                        {% endif %}
+                        {% if page.has_next %}
+                        <a class="mx-2" style="color: #F152BC;" href="?page={{page.next_page_number}}">Next Page</a>
+                        {% endif %}
+                    </div>
                 </div>
             </div>
             <div style="background-color: #faf0da; border-top: rgb(222, 135, 208) 2px solid; height: 100PX;">

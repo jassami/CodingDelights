@@ -5,6 +5,7 @@ from .models import *
 from django.contrib import messages
 import bcrypt
 from django.db.models import Avg
+from django.core.paginator import Paginator
 
 
 def home(request):
@@ -95,9 +96,14 @@ def cookie(request, cookie_id):
 def all(request):
     if 'user_id' not in request.session:
         return redirect('/login')
+    all_delights= Delight.objects.all()
+    delight_paginator= Paginator(all_delights, 6)
+    page_number = request.GET.get('page')
+    page= delight_paginator.get_page(page_number)
+    
     context={
-        'all_delights': Delight.objects.all().order_by('?'),
-        'count': Delight.objects.all().count,
+        'count': delight_paginator.count,
+        'page': page,
     }
     return render(request, 'all.html', context)
 
