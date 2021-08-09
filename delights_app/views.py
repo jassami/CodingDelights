@@ -1,3 +1,4 @@
+from django.http.response import JsonResponse
 from django.shortcuts import redirect, render, HttpResponse
 from django.apps import apps
 User = apps.get_model('login_app', 'User')
@@ -6,6 +7,7 @@ from django.contrib import messages
 import bcrypt
 from django.db.models import Avg
 from django.core.paginator import Paginator
+from django.forms.models import model_to_dict
 
 
 def home(request):
@@ -114,7 +116,8 @@ def add_delight(request, delight_id):
     temp_del_oreder= TempDelight.objects.create(temp_delight= Delight.objects.get(id= delight_id), qty= request.POST['qty'])
     request.session['basket'] += int(request.POST['qty'])
     print(temp_del_oreder)
-    return redirect(f'/delights/{catigory}/{delight_id}')
+    return JsonResponse(model_to_dict(temp_del_oreder))
+    # return redirect(f'/delights/{catigory}/{delight_id}')
 
 def check_out(request):
     if 'user_id' not in request.session:

@@ -10,12 +10,33 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     {% load static %}
     {% load mathfilters %}
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     <link rel="stylesheet" href="{% static 'css/star.css' %}">
     <script defer src="{% static 'js/script.js' %}"></script>
+    <script>
+        $(document).ready(function(){
+            $('#form').submit(function(e){
+                e.preventDefault();
+                var response= $.post('/delights/add_delight/{{cookie.id}}', $('#form').serialize());
+                console.log(response);
+                response.done(function(data){
+                    console.log(data);
+                    var x= Number(data['qty']);
+                    var y= Number($('#basket').text());
+                    var z= x+y
+                    $('#basket').text(z);
+
+                })
+            })
+            $('#add').click(function(){
+                    $('#show').text('Item added to the basket!').delay(3000).fadeOut('slow');
+                });
+        });
+    </script>
 </head>
 <body>
     <div class="main_container container-fluid" style="background-color: #fdf8ec">
@@ -33,7 +54,7 @@
                 <a class="float-right mt-5 ml-5 monospace" href="/delights/logout">Logout</a>
             </div>
             <div class="col-1 d-flex">
-                <p class="mt-5 monospace">Basket({{request.session.basket}})</p>
+                <p class="mt-5 monospace">Basket (<samp id="basket">{{request.session.basket}}</samp>)</p>
             </div>
         </div>
         <div class="row m-5">
@@ -165,9 +186,9 @@
                 <p class="monospace">{{cookie.des}}</p>
                 <div class="row">
                     <p class="monospace ml-5">One cookie for ${{cookie.price}}</p>
-                    <form action="/delights/add_delight/{{cookie.id}}" method="POST">
+                    <form id="form" action="/delights/add_delight/{{cookie.id}}" method="POST">
                         {% csrf_token %}
-                        <select name="qty" id="">
+                        <select class="ml-4" name="qty" id="">
                             <option value="1">1</option>
                             <option value="2">2</option>
                             <option value="3">3</option>
@@ -181,10 +202,13 @@
                             <option value="11">11</option>
                             <option value="12">12</option>
                         </select><br>
-                        <input type="submit" class="one btn m-4" value="Add Delight">
+                        <input id="add" type="submit" class="one btn m-4" value="Add Delight">
                     </form><br>
                 </div>
-                <p><a class="check_out" href="/delights/check_out">Check out</a></p>
+                <div class="row ml-5">
+                    <p mx-5><a class="check_out" href="/delights/check_out">Check out</a></p>
+                    <p style="color: rgb(33, 243, 33);" class="ml-5" id="show"></p>
+                </div>
             </div>
         </div>
         <div class="col-6 ml-5">
